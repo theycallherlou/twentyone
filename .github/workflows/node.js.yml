@@ -25,8 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'node'
-  
+
       # Navigate to the server folder
       - name: Change directory to server
         run: cd server
@@ -47,6 +46,6 @@ jobs:
         working-directory: ./server
 
       # Optionally run build if you have a build step
-      - name: Run build 
+      - name: Run build
         run: npm run build --if-present
         working-directory: ./server
