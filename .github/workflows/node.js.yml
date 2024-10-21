@@ -1,7 +1,6 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
 
 on:
   push:
@@ -10,29 +9,28 @@ on:
     branches: [main]
 
 jobs:
-  build-server:
+  server:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 21.x]
+        node-version: [18.x, 20.x, 22.x]
 
     steps:
-      - name: Checkout source code
+      - name: Checkout server source code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ matrix.node-version }} for server
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Navigate to the server folder
       - name: Change directory to server
         run: cd server
 
       # Install dependencies in the server directory
       - name: Install dependencies
-        run: npm install
+        run: npm ci 
         working-directory: ./server
 
       # Lint for server
@@ -49,3 +47,39 @@ jobs:
       - name: Run build
         run: npm run build --if-present
         working-directory: ./server
+
+  client:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - name: Checkout client source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }} for client
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Change directory to client
+        run: cd client
+
+      # Install dependencies in the client directory
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: Lint code
+        run: npm run lint
+        working-directory: ./client
+
+      - name: Run tests
+        run: npm run test --if-present
+        working-directory: ./client
+
+      - name: Run build
+        run: npm run build --if-present
+        working-directory: ./client
