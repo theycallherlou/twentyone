@@ -13,15 +13,15 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 'latest',
       globals: globals.browser,
+      parser: tseslint.parser,
       parserOptions: {
         sourceType: 'module',
         project: './tsconfig.json',
         projectService: true,
-        tsconfigRootDir: import.meta.dirname
-      },
-      parser: tseslint.parser,
-      ecmaFeatures: {
-        jsx: true
+        tsconfigRootDir: import.meta.dirname,
+        ecmaFeatures: {
+          jsx: true
+        }
       }
     },
     plugins: {
