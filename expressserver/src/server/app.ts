@@ -2,7 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import employeesRouter from '../routes/employees';
-import { errorHandler } from '../middlewares/errors';
+import { errorHandler } from '../middlewares/error';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
