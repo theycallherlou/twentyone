@@ -11,12 +11,18 @@ interface Employee {
 export default function EmployeeList() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const data = await getEmployees();
-      setEmployees(data);
-      setLoading(false);
+      try {
+        const data = await getEmployees();
+        setEmployees(data);
+      } catch (error: any) {
+        setError('Failed to fetch employee data');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchEmployees();
@@ -24,6 +30,10 @@ export default function EmployeeList() {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
