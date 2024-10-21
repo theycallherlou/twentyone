@@ -26,18 +26,27 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'node'
+  
+      # Navigate to the server folder
+      - name: Change directory to server
+        run: cd server
 
+      # Install dependencies in the server directory
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+        working-directory: ./server
 
-      - name: Lint
+      # Lint for server
+      - name: Lint code
         run: npm run lint
+        working-directory: ./server
 
-      - name: Run build
-        run: npm run build --if-present
-
+      # Run the tests
       - name: Run tests
-        run: npm test --if-present
+        run: npm run test --if-present
+        working-directory: ./server
 
-        env:
-          CI: true
+      # Optionally run build if you have a build step
+      - name: Run build 
+        run: npm run build --if-present
+        working-directory: ./server
