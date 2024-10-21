@@ -19,6 +19,10 @@ export async function getAllEmployees(
     }
     res.json(employees);
   } catch (error) {
+    console.error('Error fetching employee data:', error);
+    res
+      .status(500)
+      .json({ message: 'Failed to fetch employee data' });
     next(new AppError('Failed to fetch employees data', 500));
   }
 }
@@ -39,6 +43,10 @@ export async function getEmployeeById(
     }
     res.json(employee);
   } catch (error) {
+    console.error('Error fetching employee data:', error);
+    res
+      .status(500)
+      .json({ message: 'Failed to fetch employee data' });
     next(new AppError('Failed to fetch employee data', 500));
   }
 }

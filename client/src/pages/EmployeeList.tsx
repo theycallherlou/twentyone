@@ -17,6 +17,7 @@ export default function EmployeeList() {
     const fetchEmployees = async () => {
       try {
         const data = await getEmployees();
+        console.log('Employees fetched:', data);
         setEmployees(data);
       } catch (error: unknown) {
         console.error('Error fetching employees:', error);
